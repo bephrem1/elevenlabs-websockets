@@ -6,14 +6,14 @@ A Python sample showcasing a complete server-side integration w/ the [ElevenLabs
 
 ### Setup
 
-#### 0) clone + cd:
+#### **0) clone + cd:**
 
 ```
 git clone https://github.com/bephrem1/elevenlabs-websockets.git
 cd elevenlabs-websockets
 ```
 
-#### 1) install dependencies:
+#### **1) install dependencies:**
 
 ```
 pip install -r requirements.txt
@@ -21,15 +21,25 @@ pip install -r requirements.txt
 
 ### Run
 
-#### 3) run in terminal
+#### **2) run in terminal**
 
 ```
 python3 src/testing/voicebox.py
 ```
 
+#### you should see something like this:
+
+<img src="./assets/img/successful-run.png" alt="terminal logs"/>
+
+> **Clocking Times:** elapsed time is clocked for a few critical events
+>
+> - `initial socket connection`: websocket connection to ElevenLabs (usually takes 150-250ms) — this overhead exists on every TTS generation since connections have to be reestablished every generation (& the websocket handshake has to be redone).
+> - `fgl`: stands for "first generation latency", this is the time between when the first speech text chunk is sent → & the first `base64` speech chunk is received back from ElevenLabs
+> - `totelap`: this is the total elapsed time between when `prepare()` was called → & the relevant log being recorded. This is an impotant metric to track the time from when LLM inference may have been fired off & the first speech chunk received back.
+
 ### Inspecting
 
-#### 4) inspect files
+#### 3) inspect files
 
 ```
 src/voicebox/Voicebox.py → has all socket-related logic
