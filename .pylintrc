@@ -1,0 +1,12 @@
+[MASTER]
+# Add <directories> to the black list. They should be base names, not paths.
+ignore=
+
+[MESSAGES CONTROL]
+disable=warning, refactor, convention, info, missing-class-docstring,\
+pointless-string-statement, missing-function-docstring, missing-module-docstring,\
+missing-class-docstring, missing-function-docstring
+
+[FORMAT]
+# Maximum number of characters on a single line.
+max-line-length=100

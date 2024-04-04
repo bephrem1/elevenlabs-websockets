@@ -1,7 +1,6 @@
 import websockets
 import json
 import base64
-import io
 import time
 import asyncio
 import inspect
@@ -9,16 +8,15 @@ from pydub import AudioSegment
 from pydub.playback import play
 from typing import Callable, Any
 
-from src.interviewer.InterviewerPersona import InterviewerPersonaAditya
 from src.Environment import Environment
 from src.helpers.logging import LoggerFactory
 from src.helpers.concurrency.tasks import InterruptibleAsyncTask
 
 # import logging
 # logging.basicConfig(level=logging.DEBUG) # uncomment to log socket activity
-logger = LoggerFactory.get_logger(namespace="interviewer-voicebox", color="green")
+logger = LoggerFactory.get_logger(namespace="voicebox", color="green")
 
-eleven_labs_api_key = Environment.get("ELEVEN_LABS_API_KEY")
+elevenlabs_api_key = Environment.get("ELEVENLABS_API_KEY")
 tts_model_id = "eleven_turbo_v2"
 tts_options = {
     "optimize_streaming_latency": 4,  # 0-4, 4 is max latency optimizations
@@ -38,11 +36,7 @@ OnSpeech = Callable[[str], Any]
 
 
 class Voicebox:
-    def __init__(
-        self,
-        voice_id: str = InterviewerPersonaAditya.get_voice_id(),
-        on_speech: OnSpeech = None,
-    ):
+    def __init__(self, voice_id: str, on_speech: OnSpeech = None):
         self.voice_id = voice_id
         self.on_speech = on_speech
 
@@ -55,7 +49,7 @@ class Voicebox:
         self._first_speech_received = False
         self._generation_complete = False
 
-        ## threads
+        ## tasks
         self._prepare_task: InterruptibleAsyncTask = None
         self._websocket_listen_task: InterruptibleAsyncTask = None
 
@@ -297,8 +291,8 @@ class Voicebox:
                 if is_final:
                     self._generation_complete = True
                     break
-            except websockets.exceptions.ConnectionClosed:
-                logger.error("connection closed while listening")
+            except websockets.exceptions.ConnectionClosed as e:
+                logger.error(f"connection closed while listening: {e}")
 
                 return
 
@@ -402,7 +396,7 @@ class Voicebox:
         return json.dumps(
             {
                 **fields,
-                "xi_api_key": eleven_labs_api_key,
+                "xi_api_key": elevenlabs_api_key,
             }
         )
 
