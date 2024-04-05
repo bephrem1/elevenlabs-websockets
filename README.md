@@ -73,8 +73,6 @@ state:
 
 ---
 
-<br>
-
 Just wanted to publish this as a quick sample — forgive any rough edges on code formatting, etc.
 
 <a href="https://www.buymeacoffee.com/bephrem" target="_blank">
