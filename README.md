@@ -31,8 +31,6 @@ python3 src/testing/voicebox.py
 
 <img src="./assets/img/successful-run.png" alt="terminal logs"/>
 
-<br>
-
 **Clocking Times:** elapsed time is clocked for a few critical events
 
 - `initial socket connection`: websocket connection to ElevenLabs (usually takes 150-250ms) — this overhead exists on every TTS generation since connections have to be reestablished every generation (& the websocket handshake has to be redone).
