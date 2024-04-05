@@ -3,7 +3,7 @@ import os
 from dotenv import load_dotenv
 from src.PathManager import PathManager
 
-required_keys = ["ENV", "ELEVENLABS_API_KEY"]
+required_keys = ["ELEVENLABS_API_KEY"]
 
 
 class Environment:
@@ -30,18 +30,6 @@ class Environment:
             return try_parse_json(os.environ[key])
         else:
             return None
-
-    @classmethod
-    def is_development(cls):
-        return cls.get("ENV") in ["dev", "develop", "development"]
-
-    @classmethod
-    def is_staging(cls):
-        return cls.get("ENV") == "staging"
-
-    @classmethod
-    def is_production(cls):
-        return cls.get("ENV") in ["prod", "production"]
 
 
 def try_parse_json(value):

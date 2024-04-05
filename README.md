@@ -19,9 +19,17 @@ cd elevenlabs-websockets
 pip install -r requirements.txt
 ```
 
+#### **2) create .env file:**
+
+create a file called `.env` at the root of the project w/ 1 key:
+
+```
+ELEVENLABS_API_KEY = api_key_here
+```
+
 ### Run
 
-#### **2) run in terminal**
+#### **3) run in terminal**
 
 ```
 python3 src/testing/voicebox.py
@@ -39,7 +47,7 @@ python3 src/testing/voicebox.py
 
 ### Inspecting
 
-#### 3) inspect files
+#### 4) inspect files
 
 ```
 src/voicebox/Voicebox.py → has all socket-related logic
